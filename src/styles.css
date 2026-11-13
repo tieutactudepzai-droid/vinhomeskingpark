@@ -106,7 +106,7 @@
   --gradient-hero-fade: linear-gradient(
     180deg,
     oklch(0.17 0.03 220 / 0.55) 0%,
-    oklch(0.17 0.03 220 / 0.1) 35%,
+    oklch(0.17 0.03 220 / 0.35) 35%,
     oklch(0.17 0.03 220 / 0.85) 100%
   );
   --shadow-elegant: 0 30px 60px -30px oklch(0.21 0.035 215 / 0.45);
