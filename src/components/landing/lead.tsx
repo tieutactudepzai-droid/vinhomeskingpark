@@ -63,7 +63,7 @@ export function LeadForm({
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [productType, setProductType] = useState<ProductType | undefined>(defaultType);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Partial<Record<"fullName" | "phone" | "productType", string>>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
 
   const dark = tone === "dark";
@@ -72,10 +72,12 @@ export function LeadForm({
     e.preventDefault();
     const parsed = leadSchema.safeParse({ fullName, phone, productType, source });
     if (!parsed.success) {
-      const next: Record<string, string> = {};
+      const next: Partial<Record<"fullName" | "phone" | "productType", string>> = {};
       for (const issue of parsed.error.issues) {
-        const key = String(issue.path[0]);
-        if (!next[key]) next[key] = issue.message;
+        const key = issue.path[0];
+        if ((key === "fullName" || key === "phone" || key === "productType") && !next[key]) {
+          next[key] = issue.message;
+        }
       }
       setErrors(next);
       return;
