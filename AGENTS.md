@@ -32,3 +32,4 @@ use the editor.
 ## Project rules
 - Lead forms submit through `submitPriceRequest` (createServerFn) which validates with the shared zod schema in `src/lib/lead-schema.ts` and inserts with the service-role client; `price_requests` has RLS on with no anon/authenticated policies so visitors can never read submissions.
 - Landing page content lives in `src/components/landing/data.ts`; sections only render it, so copy edits stay in one place.
+- Landing text renders through `EditableText` (`src/components/landing/edit.tsx`), which overlays per-browser localStorage edits on the defaults; edit mode is auto-on only on the preview/localhost host so public visitors never see it, and permanent copy changes still go into the source defaults.
