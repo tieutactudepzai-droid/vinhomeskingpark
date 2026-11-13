@@ -47,11 +47,15 @@ export function EditProvider({ children }: { children: ReactNode }) {
   const [overrides, setOverrides] = useState<Overrides>({});
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("edit") === "1") {
-      window.localStorage.setItem(MODE_KEY, "1");
-    }
-    setEditMode(window.localStorage.getItem(MODE_KEY) === "1");
+    const { search, hash, hostname } = window.location;
+    // Accept ?edit=1 in the query string or anywhere after the # (e.g. /#tong-quan/?edit=1).
+    const asked = /[?&]edit=1\b/.test(search) || /edit=1\b/.test(hash);
+    if (asked) window.localStorage.setItem(MODE_KEY, "1");
+    // The Lovable preview (and local dev) is owner-only, so edit mode is on there unless switched off.
+    const isPreview =
+      hostname.startsWith("id-preview--") || hostname === "localhost" || hostname === "127.0.0.1";
+    const stored = window.localStorage.getItem(MODE_KEY);
+    setEditMode(stored === "1" || (isPreview && stored !== "0"));
     setOverrides(loadOverrides());
   }, []);
 
@@ -70,7 +74,7 @@ export function EditProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const exitEdit = useCallback(() => {
-    window.localStorage.removeItem(MODE_KEY);
+    window.localStorage.setItem(MODE_KEY, "0");
     setEditMode(false);
   }, []);
 
