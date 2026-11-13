@@ -55,7 +55,7 @@ export function LeadForm({
   source,
   tone = "light",
 }: {
-  defaultType?: ProductType;
+  defaultType?: ProductType | undefined;
   source: string;
   tone?: "light" | "dark";
 }) {
