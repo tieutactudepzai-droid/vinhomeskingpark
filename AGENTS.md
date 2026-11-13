@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Lead forms submit through `submitPriceRequest` (createServerFn) which validates with the shared zod schema in `src/lib/lead-schema.ts` and inserts with the service-role client; `price_requests` has RLS on with no anon/authenticated policies so visitors can never read submissions.
+- Landing page content lives in `src/components/landing/data.ts`; sections only render it, so copy edits stay in one place.
