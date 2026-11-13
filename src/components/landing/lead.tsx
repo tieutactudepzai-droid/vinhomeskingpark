@@ -13,7 +13,7 @@ const LeadContext = createContext<LeadCtx>({ open: () => {} });
 export const useLead = () => useContext(LeadContext);
 
 export function LeadProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<{ open: boolean; type?: ProductType; source?: string }>({
+  const [state, setState] = useState<{ open: boolean; type?: ProductType | undefined; source?: string | undefined }>({
     open: false,
   });
   const open = useCallback(
