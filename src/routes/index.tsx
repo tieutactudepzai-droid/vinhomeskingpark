@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { EditProvider } from "@/components/landing/edit";
 import { FloatingContact } from "@/components/landing/floating-contact";
 import { SiteHeader } from "@/components/landing/header";
 import { LeadProvider } from "@/components/landing/lead";

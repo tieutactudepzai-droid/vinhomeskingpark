@@ -20,18 +20,21 @@ import {
   STATS,
   ZALO_URL,
 } from "./data";
+import { EditableText } from "./edit";
 import { Logo } from "./header";
 import { LeadForm, useLead } from "./lead";
 
 const ROMAN = ["I", "II", "III", "IV", "V", "VI"];
 
 function SectionHead({
+  idPrefix,
   eyebrow,
   title,
   lead,
   light,
   center,
 }: {
+  idPrefix: string;
   eyebrow: string;
   title: React.ReactNode;
   lead?: string;
@@ -40,16 +43,20 @@ function SectionHead({
 }) {
   return (
     <div className={center ? "mx-auto max-w-3xl text-center" : "max-w-2xl"}>
-      <p className="eyebrow text-gold">{eyebrow}</p>
+      <EditableText id={`${idPrefix}.eyebrow`} defaultValue={eyebrow} as="p" className="eyebrow text-gold" />
       <h2
         className={`mt-4 text-4xl font-medium leading-[1.05] md:text-6xl ${light ? "text-ivory" : "text-foreground"}`}
       >
         {title}
       </h2>
       {lead && (
-        <p className={`mt-5 text-base leading-relaxed ${light ? "text-ivory/70" : "text-muted-foreground"}`}>
-          {lead}
-        </p>
+        <EditableText
+          id={`${idPrefix}.lead`}
+          defaultValue={lead}
+          as="p"
+          multiline
+          className={`mt-5 text-base leading-relaxed ${light ? "text-ivory/70" : "text-muted-foreground"}`}
+        />
       )}
     </div>
   );
@@ -70,16 +77,24 @@ export function Hero() {
       <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-5 pb-36 pt-32 lg:px-8 lg:pb-40">
         <div className="grid items-end gap-10 lg:grid-cols-[1.4fr_1fr]">
           <div className="animate-float-up">
-            <p className="eyebrow text-gold-soft">Vinhomes King Park · Bán đảo Hòa Long</p>
+            <EditableText
+              id="hero.eyebrow"
+              defaultValue="Vinhomes King Park · Bán đảo Hòa Long"
+              as="p"
+              className="eyebrow text-gold-soft"
+            />
             <h1 className="mt-5 text-6xl font-medium leading-[0.92] md:text-8xl lg:text-[8.5rem]">
-              Đại đô thị
+              <EditableText id="hero.title1" defaultValue="Đại đô thị" />
               <br />
-              <span className="italic text-gold">ven sông</span>
+              <EditableText id="hero.title2" defaultValue="ven sông" className="italic text-gold" />
             </h1>
-            <p className="mt-6 max-w-lg text-lg text-ivory/80">
-              Biểu tượng sống mới của Bắc Ninh — 268,8 ha sinh thái, nghỉ dưỡng và thể thao, ôm trọn
-              hai mặt sông Cầu.
-            </p>
+            <EditableText
+              id="hero.lead"
+              defaultValue="Biểu tượng sống mới của Bắc Ninh — 268,8 ha sinh thái, nghỉ dưỡng và thể thao, ôm trọn hai mặt sông Cầu."
+              as="p"
+              multiline
+              className="mt-6 max-w-lg text-lg text-ivory/80"
+            />
             <div className="mt-9 flex flex-wrap gap-3">
               <Button variant="gold" size="xl" onClick={() => open(undefined, "hero")}>
                 Nhận bảng giá đợt 1 <ArrowRight />
@@ -91,12 +106,12 @@ export function Hero() {
           </div>
 
           <div className="animate-float-up border border-ivory/15 bg-ink/55 p-7 backdrop-blur-md [animation-delay:200ms]">
-            <p className="eyebrow text-gold">Thông tin nhanh</p>
+            <EditableText id="hero.facts-title" defaultValue="Thông tin nhanh" as="p" className="eyebrow text-gold" />
             <dl className="mt-5 divide-y divide-ivory/10">
-              {QUICK_FACTS.map((f) => (
+              {QUICK_FACTS.map((f, i) => (
                 <div key={f.label} className="flex items-baseline justify-between gap-6 py-3 text-sm">
-                  <dt className="text-ivory/55">{f.label}</dt>
-                  <dd className="text-right font-medium">{f.value}</dd>
+                  <EditableText id={`fact.${i}.label`} defaultValue={f.label} as="dt" className="text-ivory/55" />
+                  <EditableText id={`fact.${i}.value`} defaultValue={f.value} as="dd" className="text-right font-medium" />
                 </div>
               ))}
             </dl>
@@ -112,10 +127,10 @@ export function Hero() {
               className={`py-5 md:py-6 ${i > 0 ? "md:border-l md:border-ivory/10 md:pl-8" : ""}`}
             >
               <p className="font-display text-3xl text-gold md:text-4xl">
-                {s.value}
-                <span className="ml-1 text-lg text-gold-soft">{s.unit}</span>
+                <EditableText id={`stat.${i}.value`} defaultValue={s.value} />
+                <EditableText id={`stat.${i}.unit`} defaultValue={s.unit} className="ml-1 text-lg text-gold-soft" />
               </p>
-              <p className="mt-1 text-xs text-ivory/65">{s.label}</p>
+              <EditableText id={`stat.${i}.label`} defaultValue={s.label} as="p" className="mt-1 text-xs text-ivory/65" />
             </div>
           ))}
         </div>
@@ -130,21 +145,22 @@ export function Overview() {
       <div className="mx-auto grid max-w-7xl gap-16 px-5 lg:grid-cols-2 lg:px-8">
         <div>
           <SectionHead
+            idPrefix="overview"
             eyebrow="Tổng quan dự án"
             title={
               <>
-                Đô thị mới
+                <EditableText id="overview.title1" defaultValue="Đô thị mới" />
                 <br />
-                <span className="italic text-gold">thành phố Bắc Ninh</span>
+                <EditableText id="overview.title2" defaultValue="thành phố Bắc Ninh" className="italic text-gold" />
               </>
             }
             lead="Tọa lạc phía Tây Bắc thành phố Bắc Ninh, ôm trọn bán đảo sinh thái Hòa Long, Vinhomes King Park là đại đô thị quy mô 268,8 ha với tổng vốn đầu tư 41.000 tỷ đồng. Hơn 120 ha dành cho cây xanh, mặt nước, thể thao và công viên chủ đề."
           />
           <dl className="mt-12 grid gap-x-10 sm:grid-cols-2">
-            {SPECS.map((s) => (
+            {SPECS.map((s, i) => (
               <div key={s.label} className="border-t border-border py-4">
-                <dt className="eyebrow text-muted-foreground">{s.label}</dt>
-                <dd className="mt-1.5 text-[15px] font-medium">{s.value}</dd>
+                <EditableText id={`spec.${i}.label`} defaultValue={s.label} as="dt" className="eyebrow text-muted-foreground" />
+                <EditableText id={`spec.${i}.value`} defaultValue={s.value} as="dd" className="mt-1.5 text-[15px] font-medium" />
               </div>
             ))}
           </dl>
@@ -160,12 +176,12 @@ export function Overview() {
             className="relative aspect-[4/5] w-full object-cover shadow-elegant"
           />
           <div className="absolute -bottom-8 left-6 right-6 bg-ink p-6 text-ivory shadow-elegant md:left-auto md:right-10 md:w-80">
-            <p className="eyebrow text-gold">Tiến độ dự án</p>
+            <EditableText id="milestone.title" defaultValue="Tiến độ dự án" as="p" className="eyebrow text-gold" />
             <ol className="mt-4 space-y-3">
-              {MILESTONES.map((m) => (
+              {MILESTONES.map((m, i) => (
                 <li key={m.what} className="flex items-baseline justify-between gap-4 text-sm">
-                  <span className="text-ivory/70">{m.what}</span>
-                  <span className="font-display text-lg text-gold-soft">{m.when}</span>
+                  <EditableText id={`milestone.${i}.what`} defaultValue={m.what} className="text-ivory/70" />
+                  <EditableText id={`milestone.${i}.when`} defaultValue={m.when} className="font-display text-lg text-gold-soft" />
                 </li>
               ))}
             </ol>
@@ -182,24 +198,27 @@ export function Location() {
       <div className="mx-auto grid max-w-7xl gap-16 px-5 lg:grid-cols-[1fr_1.1fr] lg:px-8">
         <SectionHead
           light
+          idPrefix="location"
           eyebrow="Vị trí · Kết nối"
           title={
             <>
-              Tâm điểm phía Tây Bắc
+              <EditableText id="location.title1" defaultValue="Tâm điểm phía Tây Bắc" />
               <br />
-              <span className="italic text-gold">thủ phủ Kinh Bắc</span>
+              <EditableText id="location.title2" defaultValue="thủ phủ Kinh Bắc" className="italic text-gold" />
             </>
           }
           lead="Tọa độ vàng tại bán đảo Hòa Long kết nối đa hướng — cư dân dễ dàng tiếp cận trung tâm hành chính, khu công nghiệp và các tỉnh thành lân cận."
         />
         <ul className="divide-y divide-ivory/10 border-y border-ivory/10">
-          {CONNECTIONS.map((c) => (
+          {CONNECTIONS.map((c, i) => (
             <li key={c.place} className="group flex items-center justify-between py-5">
-              <span className="text-lg text-ivory/85 transition-colors group-hover:text-ivory">
-                {c.place}
-              </span>
+              <EditableText
+                id={`conn.${i}.place`}
+                defaultValue={c.place}
+                className="text-lg text-ivory/85 transition-colors group-hover:text-ivory"
+              />
               <span className="flex items-baseline gap-2">
-                <span className="font-display text-5xl text-gold">{c.minutes}</span>
+                <EditableText id={`conn.${i}.minutes`} defaultValue={String(c.minutes)} className="font-display text-5xl text-gold" />
                 <span className="text-xs uppercase tracking-widest text-ivory/50">phút</span>
               </span>
             </li>
@@ -216,10 +235,12 @@ export function Highlights() {
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHead
           center
+          idPrefix="highlights"
           eyebrow="Giá trị cốt lõi"
           title={
             <>
-              Sáu lý do định hình <span className="italic text-gold">King Park</span>
+              <EditableText id="highlights.title1" defaultValue="Sáu lý do định hình" />{" "}
+              <EditableText id="highlights.title2" defaultValue="King Park" className="italic text-gold" />
             </>
           }
         />
@@ -229,8 +250,14 @@ export function Highlights() {
               <span className="font-display text-5xl italic text-gold/70 transition-colors group-hover:text-gold">
                 {ROMAN[i]}.
               </span>
-              <h3 className="mt-6 text-2xl font-medium">{h.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{h.body}</p>
+              <EditableText id={`hl.${i}.title`} defaultValue={h.title} as="h3" className="mt-6 text-2xl font-medium" />
+              <EditableText
+                id={`hl.${i}.body`}
+                defaultValue={h.body}
+                as="p"
+                multiline
+                className="mt-3 text-sm leading-relaxed text-muted-foreground"
+              />
             </article>
           ))}
         </div>
@@ -246,17 +273,19 @@ export function Products() {
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHead
+            idPrefix="products"
             eyebrow="Kiến trúc · Sản phẩm"
             title={
               <>
-                Neo‑Classic &amp; <span className="italic text-gold">Riverside</span>
+                <EditableText id="products.title1" defaultValue="Neo‑Classic &" />{" "}
+                <EditableText id="products.title2" defaultValue="Riverside" className="italic text-gold" />
               </>
             }
             lead="Bốn dòng sản phẩm cho an cư, nghỉ dưỡng và kinh doanh — quỹ căn độc quyền mở bán sớm đợt 1."
           />
         </div>
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {PRODUCTS.map((p) => (
+          {PRODUCTS.map((p, i) => (
             <article key={p.name} className="group flex flex-col bg-card shadow-elegant">
               <div className="relative overflow-hidden">
                 <img
@@ -267,20 +296,22 @@ export function Products() {
                   loading="lazy"
                   className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <span className="eyebrow absolute left-4 top-4 bg-ink/80 px-3 py-1.5 text-[10px] text-gold-soft backdrop-blur">
-                  {p.status}
-                </span>
+                <EditableText
+                  id={`prod.${i}.status`}
+                  defaultValue={p.status}
+                  className="eyebrow absolute left-4 top-4 bg-ink/80 px-3 py-1.5 text-[10px] text-gold-soft backdrop-blur"
+                />
               </div>
               <div className="flex flex-1 flex-col p-6">
-                <h3 className="text-2xl font-medium">{p.name}</h3>
+                <EditableText id={`prod.${i}.name`} defaultValue={p.name} as="h3" className="text-2xl font-medium" />
                 <dl className="mt-4 space-y-2 text-sm">
                   <div className="flex justify-between">
                     <dt className="text-muted-foreground">Diện tích</dt>
-                    <dd className="font-medium">{p.area}</dd>
+                    <EditableText id={`prod.${i}.area`} defaultValue={p.area} as="dd" className="font-medium" />
                   </div>
                   <div className="flex justify-between">
                     <dt className="text-muted-foreground">Quy mô</dt>
-                    <dd className="font-medium">{p.floors}</dd>
+                    <EditableText id={`prod.${i}.floors`} defaultValue={p.floors} as="dd" className="font-medium" />
                   </div>
                 </dl>
                 <button
@@ -304,12 +335,13 @@ export function Amenities() {
     <section id="tien-ich" className="scroll-mt-20 py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHead
+          idPrefix="amenities"
           eyebrow="Tiện ích · Phong cách sống"
           title={
             <>
-              Mọi tiện ích trong
+              <EditableText id="amenities.title1" defaultValue="Mọi tiện ích trong" />
               <br />
-              <span className="italic text-gold">cùng một không gian</span>
+              <EditableText id="amenities.title2" defaultValue="cùng một không gian" className="italic text-gold" />
             </>
           }
           lead="Hệ sinh thái 2.000+ tiện ích quốc tế, nơi vận động, thư giãn và kết nối cộng đồng diễn ra liền mạch."
@@ -325,11 +357,15 @@ export function Amenities() {
               className="h-full min-h-80 w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <figcaption className="bg-hero-fade absolute inset-0 flex flex-col justify-end p-8 text-ivory">
-              <p className="font-display text-6xl text-gold">57 ha</p>
-              <h3 className="mt-2 text-3xl">Công viên & quảng trường ven sông</h3>
-              <p className="mt-2 max-w-md text-sm text-ivory/75">
-                Đường dạo bộ rợp bóng, đài vọng cảnh và bến thuyền ngắm hoàng hôn trải dài sát mép nước.
-              </p>
+              <EditableText id="amen.park.value" defaultValue="57 ha" as="p" className="font-display text-6xl text-gold" />
+              <EditableText id="amen.park.title" defaultValue="Công viên & quảng trường ven sông" as="h3" className="mt-2 text-3xl" />
+              <EditableText
+                id="amen.park.body"
+                defaultValue="Đường dạo bộ rợp bóng, đài vọng cảnh và bến thuyền ngắm hoàng hôn trải dài sát mép nước."
+                as="p"
+                multiline
+                className="mt-2 max-w-md text-sm text-ivory/75"
+              />
             </figcaption>
           </figure>
           <figure className="group relative overflow-hidden">
@@ -342,17 +378,29 @@ export function Amenities() {
               className="h-full min-h-64 w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <figcaption className="bg-hero-fade absolute inset-0 flex flex-col justify-end p-6 text-ivory">
-              <h3 className="text-2xl">Bể bơi bốn mùa & Jacuzzi</h3>
+              <EditableText id="amen.pool.title" defaultValue="Bể bơi bốn mùa & Jacuzzi" as="h3" className="text-2xl" />
             </figcaption>
           </figure>
           <div className="grid grid-cols-2 gap-5">
             <div className="bg-ink p-6 text-ivory">
-              <p className="font-display text-5xl text-gold">70ha</p>
-              <p className="mt-2 text-sm text-ivory/70">Tổ hợp thể thao: tennis, pickleball, chạy bộ</p>
+              <EditableText id="amen.sport.value" defaultValue="70ha" as="p" className="font-display text-5xl text-gold" />
+              <EditableText
+                id="amen.sport.body"
+                defaultValue="Tổ hợp thể thao: tennis, pickleball, chạy bộ"
+                as="p"
+                multiline
+                className="mt-2 text-sm text-ivory/70"
+              />
             </div>
             <div className="bg-gold-gradient p-6 text-primary-foreground">
-              <p className="font-display text-3xl">Vincom · Vinmec</p>
-              <p className="mt-2 text-sm opacity-80">Thương mại, y tế & giáo dục chuẩn quốc tế</p>
+              <EditableText id="amen.vin.value" defaultValue="Vincom · Vinmec" as="p" className="font-display text-3xl" />
+              <EditableText
+                id="amen.vin.body"
+                defaultValue="Thương mại, y tế & giáo dục chuẩn quốc tế"
+                as="p"
+                multiline
+                className="mt-2 text-sm opacity-80"
+              />
             </div>
           </div>
         </div>
@@ -367,30 +415,43 @@ export function Investment() {
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHead
           center
+          idPrefix="invest"
           eyebrow="Giá trị đầu tư"
           title={
             <>
-              Tăng trưởng vượt trội tại
+              <EditableText id="invest.title1" defaultValue="Tăng trưởng vượt trội tại" />
               <br />
-              <span className="italic text-gold">thủ phủ công nghiệp</span>
+              <EditableText id="invest.title2" defaultValue="thủ phủ công nghiệp" className="italic text-gold" />
             </>
           }
           lead="Đón đầu hạ tầng Vành đai 4 và đô thị hóa Kinh Bắc — thương hiệu Vinhomes bảo chứng thanh khoản và giá trị gia tăng."
         />
         <div className="mt-16 grid gap-10 md:grid-cols-3">
-          {INVEST_NUMBERS.map((n) => (
+          {INVEST_NUMBERS.map((n, i) => (
             <div key={n.title} className="border-t-2 border-gold pt-6">
-              <p className="font-display text-6xl text-foreground">{n.value}</p>
-              <h3 className="eyebrow mt-4 text-[11px] text-gold">{n.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{n.body}</p>
+              <EditableText id={`inv.${i}.value`} defaultValue={n.value} as="p" className="font-display text-6xl text-foreground" />
+              <EditableText id={`inv.${i}.title`} defaultValue={n.title} as="h3" className="eyebrow mt-4 text-[11px] text-gold" />
+              <EditableText
+                id={`inv.${i}.body`}
+                defaultValue={n.body}
+                as="p"
+                multiline
+                className="mt-3 text-sm leading-relaxed text-muted-foreground"
+              />
             </div>
           ))}
         </div>
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {INVEST_REASONS.map((r) => (
+          {INVEST_REASONS.map((r, i) => (
             <div key={r.title} className="bg-secondary p-6">
-              <h4 className="font-display text-xl font-medium">{r.title}</h4>
-              <p className="mt-2 text-sm text-muted-foreground">{r.body}</p>
+              <EditableText id={`reason.${i}.title`} defaultValue={r.title} as="h4" className="font-display text-xl font-medium" />
+              <EditableText
+                id={`reason.${i}.body`}
+                defaultValue={r.body}
+                as="p"
+                multiline
+                className="mt-2 text-sm text-muted-foreground"
+              />
             </div>
           ))}
         </div>
@@ -413,15 +474,19 @@ export function LeadSection() {
       <div className="bg-ink-gradient absolute inset-0 opacity-80" />
       <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-2 lg:px-8">
         <div>
-          <p className="eyebrow text-gold">Cập nhật bảng giá</p>
+          <EditableText id="lead.eyebrow" defaultValue="Cập nhật bảng giá" as="p" className="eyebrow text-gold" />
           <h2 className="mt-4 text-5xl font-medium leading-[1.02] md:text-7xl">
-            Quỹ căn độc quyền
+            <EditableText id="lead.title1" defaultValue="Quỹ căn độc quyền" />
             <br />
-            <span className="italic text-gold">mở bán sớm đợt 1</span>
+            <EditableText id="lead.title2" defaultValue="mở bán sớm đợt 1" className="italic text-gold" />
           </h2>
-          <p className="mt-6 max-w-md text-ivory/70">
-            Để lại thông tin để nhận bảng giá, mặt bằng mới nhất và chính sách ưu đãi qua Zalo & email.
-          </p>
+          <EditableText
+            id="lead.body"
+            defaultValue="Để lại thông tin để nhận bảng giá, mặt bằng mới nhất và chính sách ưu đãi qua Zalo & email."
+            as="p"
+            multiline
+            className="mt-6 max-w-md text-ivory/70"
+          />
           <div className="mt-10 flex flex-wrap gap-6 text-sm">
             <a href={`tel:${HOTLINE}`} className="flex items-center gap-3 hover:text-gold">
               <span className="flex h-11 w-11 items-center justify-center rounded-full border border-gold/50">
@@ -438,7 +503,7 @@ export function LeadSection() {
               </span>
               <span>
                 <span className="block text-ivory/50">Chat Zalo</span>
-                <span className="font-display text-2xl">Tư vấn 24/7</span>
+                <EditableText id="lead.zalo" defaultValue="Tư vấn 24/7" className="block font-display text-2xl" />
               </span>
             </a>
           </div>
@@ -457,10 +522,13 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-3 lg:px-8">
         <div>
           <Logo light />
-          <p className="mt-5 max-w-xs text-sm">
-            Vinhomes — thương hiệu bất động sản thuộc Tập đoàn Vingroup, tiên phong kiến tạo đại đô thị
-            thông minh, sinh thái chuẩn quốc tế.
-          </p>
+          <EditableText
+            id="footer.about"
+            defaultValue="Vinhomes — thương hiệu bất động sản thuộc Tập đoàn Vingroup, tiên phong kiến tạo đại đô thị thông minh, sinh thái chuẩn quốc tế."
+            as="p"
+            multiline
+            className="mt-5 max-w-xs text-sm"
+          />
         </div>
         <div className="text-sm">
           <p className="eyebrow text-gold">Liên hệ</p>
@@ -470,12 +538,20 @@ export function SiteFooter() {
               {HOTLINE_DISPLAY}
             </a>
           </p>
-          <p className="mt-2">Dự án: Phường Kinh Bắc, tỉnh Bắc Ninh</p>
+          <EditableText
+            id="footer.address"
+            defaultValue="Dự án: Phường Kinh Bắc, tỉnh Bắc Ninh"
+            as="p"
+            className="mt-2"
+          />
         </div>
-        <p className="text-xs leading-relaxed text-ivory/45">
-          Thông tin, hình ảnh mang tính chất tham khảo và có thể thay đổi theo chính sách của chủ đầu tư
-          tại từng thời điểm.
-        </p>
+        <EditableText
+          id="footer.disclaimer"
+          defaultValue="Thông tin, hình ảnh mang tính chất tham khảo và có thể thay đổi theo chính sách của chủ đầu tư tại từng thời điểm."
+          as="p"
+          multiline
+          className="text-xs leading-relaxed text-ivory/45"
+        />
       </div>
     </footer>
   );
