@@ -1,23 +1,57 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { FloatingContact } from "@/components/landing/floating-contact";
+import { SiteHeader } from "@/components/landing/header";
+import { LeadProvider } from "@/components/landing/lead";
+import {
+  Amenities,
+  Hero,
+  Highlights,
+  Investment,
+  LeadSection,
+  Location,
+  Overview,
+  Products,
+  SiteFooter,
+} from "@/components/landing/sections";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Vinhomes King Park Bắc Ninh – Đại đô thị ven sông Cầu" },
+      {
+        name: "description",
+        content:
+          "Vinhomes King Park 268,8 ha ven sông Cầu, Bắc Ninh: shophouse, biệt thự, chung cư. Nhận bảng giá quỹ căn độc quyền đợt 1.",
+      },
+      { property: "og:title", content: "Vinhomes King Park Bắc Ninh – Đại đô thị ven sông Cầu" },
+      {
+        property: "og:description",
+        content: "Đại đô thị sinh thái 268,8 ha ven sông Cầu. Nhận bảng giá quỹ căn độc quyền đợt 1.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <LeadProvider>
+      <SiteHeader />
+      <main>
+        <Hero />
+        <Overview />
+        <Location />
+        <Highlights />
+        <Products />
+        <Amenities />
+        <Investment />
+        <LeadSection />
+      </main>
+      <SiteFooter />
+      <FloatingContact />
+    </LeadProvider>
   );
 }
