@@ -4,8 +4,8 @@ import villaDetached from "@/assets/villa-detached.jpg";
 import apartment from "@/assets/apartment.jpg";
 import type { ProductType } from "@/lib/lead-schema";
 
-export const HOTLINE = "0911600880";
-export const HOTLINE_DISPLAY = "0911 600 880";
+export const HOTLINE = "0978591194";
+export const HOTLINE_DISPLAY = "0978 591 194";
 export const ZALO_URL = `https://zalo.me/${HOTLINE}`;
 
 export const NAV = [
