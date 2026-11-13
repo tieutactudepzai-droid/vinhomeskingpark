@@ -7,7 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { Check, RotateCcw } from "lucide-react";
+import { Check, Pencil, RotateCcw } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -45,6 +45,7 @@ export const useEdit = () => useContext(EditContext);
 export function EditProvider({ children }: { children: ReactNode }) {
   const [editMode, setEditMode] = useState(false);
   const [overrides, setOverrides] = useState<Overrides>({});
+  const [canEdit, setCanEdit] = useState(false);
 
   useEffect(() => {
     const { search, hash, hostname } = window.location;
@@ -56,6 +57,7 @@ export function EditProvider({ children }: { children: ReactNode }) {
       hostname.startsWith("id-preview--") || hostname === "localhost" || hostname === "127.0.0.1";
     const stored = window.localStorage.getItem(MODE_KEY);
     setEditMode(stored === "1" || (isPreview && stored !== "0"));
+    setCanEdit(isPreview || asked || stored !== null);
     setOverrides(loadOverrides());
   }, []);
 
@@ -78,23 +80,40 @@ export function EditProvider({ children }: { children: ReactNode }) {
     setEditMode(false);
   }, []);
 
+  const enterEdit = useCallback(() => {
+    window.localStorage.setItem(MODE_KEY, "1");
+    setEditMode(true);
+  }, []);
+
   return (
     <EditContext.Provider value={{ editMode, overrides, setText, resetAll, exitEdit }}>
       {children}
-      {editMode ? <EditToolbar /> : null}
+      {editMode ? <EditToolbar /> : canEdit ? <EnterEditButton onClick={enterEdit} /> : null}
     </EditContext.Provider>
+  );
+}
+
+function EnterEditButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="fixed bottom-20 left-4 z-50 flex items-center gap-2 rounded-full border border-gold/50 bg-ink px-4 py-2.5 text-xs font-medium text-ivory shadow-elegant transition-colors hover:text-gold md:bottom-6 md:left-6"
+    >
+      <Pencil className="h-3.5 w-3.5 text-gold" /> Sửa trang
+    </button>
   );
 }
 
 function EditToolbar() {
   const { resetAll, exitEdit } = useEdit();
   return (
-    <div className="fixed inset-x-0 top-0 z-50 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 border-b border-gold/40 bg-ink px-4 py-2.5 text-ivory shadow-elegant">
+    <div className="fixed bottom-20 left-4 right-4 z-50 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-sm border border-gold/50 bg-ink px-4 py-3 text-ivory shadow-elegant md:bottom-6 md:left-6 md:right-auto md:max-w-xl">
       <p className="text-xs md:text-sm">
         <span className="font-semibold text-gold">Chế độ chỉnh sửa</span>
         <span className="hidden text-ivory/70 md:inline">
           {" "}
-          — bấm vào đoạn chữ bất kỳ để sửa, thay đổi tự lưu trên trình duyệt này.
+          — bấm vào chữ bất kỳ để sửa, tự lưu khi bấm ra ngoài.
         </span>
       </p>
       <div className="flex items-center gap-2">
