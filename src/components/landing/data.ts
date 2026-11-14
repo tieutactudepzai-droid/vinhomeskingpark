@@ -28,7 +28,7 @@ export const STATS = [
   { value: "~277", unit: "ha", label: "Mật độ xây dựng chỉ 20%" },
   { value: "200+", unit: "", label: "Tiện ích chuẩn quốc tế" },
   { value: "70", unit: "ha+", label: "Quần thể thể thao" },
-  { value: "5", unit: "phút", label: "Đến trung tâm TP Bắc Ninh" },
+  { value: "10", unit: "phút", label: "Đến trung tâm TP Bắc Ninh" },
 ];
 
 export const SPECS = [
@@ -48,12 +48,12 @@ export const MILESTONES = [
 ];
 
 export const CONNECTIONS = [
-  { place: "Trung tâm TP. Bắc Ninh", minutes: 8 },
-  { place: "Đường Vành đai 4", minutes: 10 },
-  { place: "Trung tâm hành chính mới", minutes: 10 },
-  { place: "KCN Yên Phong", minutes: 20 },
-  { place: "Thành phố Hà Nội", minutes: 25 },
-  { place: "Sân bay Quốc tế Nội Bài", minutes: 35 },
+  { place: "Trung tâm TP. Bắc Ninh (Thành cổ, Vincom Plaza)", minutes: 10 },
+  { place: "Trung tâm Hành chính tỉnh Bắc Ninh", minutes: 20 },
+  { place: "KCN Yên Phong · KCN Quế Võ", minutes: 20 },
+  { place: "Cao tốc Hà Nội – Bắc Giang", minutes: 20 },
+  { place: "KCN VSIP Bắc Ninh", minutes: 30 },
+  { place: "Sân bay Nội Bài · Sân bay Gia Bình", minutes: 30 },
 ];
 
 export const HIGHLIGHTS = [
@@ -75,7 +75,7 @@ export const HIGHLIGHTS = [
   },
   {
     title: "Cửa ngõ thủ phủ công nghiệp",
-    body: "Kết nối nhanh tới Yên Phong, Quế Võ, VSIP; Nội Bài và trung tâm Hà Nội từ 35–40 phút.",
+    body: "Khoảng 20 phút tới KCN Yên Phong, Quế Võ; 30 phút tới VSIP, sân bay Nội Bài và Gia Bình.",
   },
   {
     title: "Bảo chứng từ Vingroup",
@@ -132,9 +132,9 @@ export const INVEST_NUMBERS = [
     body: "Quy hoạch bài bản ven sông Cầu, nền tảng giá trị cho toàn khu Tây Bắc Bắc Ninh.",
   },
   {
-    value: "10 phút",
-    title: "Kết nối Vành đai 4",
-    body: "Hành lang giao thông liên vùng đang tăng tốc, thúc đẩy giá trị thương mại toàn khu.",
+    value: "20 phút",
+    title: "Tới cao tốc & khu công nghiệp",
+    body: "Cao tốc Hà Nội – Bắc Giang, KCN Yên Phong và Quế Võ trong khoảng 20 phút — hành lang giao thương thúc đẩy giá trị toàn khu.",
   },
   {
     value: "2028",

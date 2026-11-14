@@ -224,6 +224,13 @@ export function Location() {
             </li>
           ))}
         </ul>
+        <EditableText
+          id="location.note"
+          defaultValue="Thời gian lái xe tham khảo theo bản đồ kết nối của chủ đầu tư, có thể thay đổi theo giờ đi và tiến độ các tuyến đường mới."
+          as="p"
+          multiline
+          className="text-xs leading-relaxed text-ivory/45 lg:col-start-2"
+        />
       </div>
     </section>
   );
