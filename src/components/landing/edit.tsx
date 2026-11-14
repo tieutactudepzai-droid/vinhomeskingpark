@@ -7,7 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { Check, Pencil, RotateCcw } from "lucide-react";
+import { Check, ImageUp, Pencil, RotateCcw, Undo2 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -15,6 +15,60 @@ const STORAGE_KEY = "kp-content-overrides";
 const MODE_KEY = "kp-edit-mode";
 
 type Overrides = Record<string, string>;
+type ImageOverrides = Record<string, string>;
+
+// Replacement photos are too large for localStorage, so they live in IndexedDB (same browser only).
+const DB_NAME = "kp-edit";
+const IMG_STORE = "images";
+
+function openDb(): Promise<IDBDatabase> {
+  return new Promise((resolve, reject) => {
+    const req = window.indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = () => req.result.createObjectStore(IMG_STORE);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function withStore<T>(
+  mode: IDBTransactionMode,
+  run: (store: IDBObjectStore) => IDBRequest<T>,
+): Promise<T> {
+  const db = await openDb();
+  return new Promise<T>((resolve, reject) => {
+    const req = run(db.transaction(IMG_STORE, mode).objectStore(IMG_STORE));
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  }).finally(() => db.close());
+}
+
+async function loadImages(): Promise<ImageOverrides> {
+  const keys = await withStore("readonly", (s) => s.getAllKeys());
+  const values = await withStore("readonly", (s) => s.getAll());
+  const out: ImageOverrides = {};
+  keys.forEach((k, i) => {
+    if (typeof values[i] === "string") out[String(k)] = values[i] as string;
+  });
+  return out;
+}
+
+/** Downscale an uploaded photo to a JPEG data URL so it stays light to store and load. */
+async function fileToDataUrl(file: File, maxSide = 1920): Promise<string> {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = new Image();
+    img.src = url;
+    await img.decode();
+    const scale = Math.min(1, maxSide / Math.max(img.naturalWidth, img.naturalHeight));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(img.naturalWidth * scale);
+    canvas.height = Math.round(img.naturalHeight * scale);
+    canvas.getContext("2d")?.drawImage(img, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL("image/jpeg", 0.85);
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
 
 function loadOverrides(): Overrides {
   try {
@@ -27,7 +81,9 @@ function loadOverrides(): Overrides {
 type EditCtx = {
   editMode: boolean;
   overrides: Overrides;
+  images: ImageOverrides;
   setText: (id: string, value: string) => void;
+  setImage: (id: string, dataUrl: string | null) => Promise<void>;
   resetAll: () => void;
   exitEdit: () => void;
 };
@@ -35,7 +91,9 @@ type EditCtx = {
 const EditContext = createContext<EditCtx>({
   editMode: false,
   overrides: {},
+  images: {},
   setText: () => {},
+  setImage: async () => {},
   resetAll: () => {},
   exitEdit: () => {},
 });
@@ -45,6 +103,7 @@ export const useEdit = () => useContext(EditContext);
 export function EditProvider({ children }: { children: ReactNode }) {
   const [editMode, setEditMode] = useState(false);
   const [overrides, setOverrides] = useState<Overrides>({});
+  const [images, setImages] = useState<ImageOverrides>({});
   const [canEdit, setCanEdit] = useState(false);
 
   useEffect(() => {
@@ -59,6 +118,20 @@ export function EditProvider({ children }: { children: ReactNode }) {
     setEditMode(stored === "1" || (isPreview && stored !== "0"));
     setCanEdit(isPreview || asked || stored !== null);
     setOverrides(loadOverrides());
+    loadImages()
+      .then(setImages)
+      .catch(() => {});
+  }, []);
+
+  const setImage = useCallback(async (id: string, dataUrl: string | null) => {
+    if (dataUrl) await withStore("readwrite", (s) => s.put(dataUrl, id));
+    else await withStore("readwrite", (s) => s.delete(id));
+    setImages((prev) => {
+      const next = { ...prev };
+      if (dataUrl) next[id] = dataUrl;
+      else delete next[id];
+      return next;
+    });
   }, []);
 
   const setText = useCallback((id: string, value: string) => {
@@ -73,6 +146,8 @@ export function EditProvider({ children }: { children: ReactNode }) {
     if (!window.confirm("Khôi phục toàn bộ nội dung về mặc định?")) return;
     window.localStorage.removeItem(STORAGE_KEY);
     setOverrides({});
+    withStore("readwrite", (s) => s.clear()).catch(() => {});
+    setImages({});
   }, []);
 
   const exitEdit = useCallback(() => {
@@ -86,7 +161,7 @@ export function EditProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <EditContext.Provider value={{ editMode, overrides, setText, resetAll, exitEdit }}>
+    <EditContext.Provider value={{ editMode, overrides, images, setText, setImage, resetAll, exitEdit }}>
       {children}
       {editMode ? <EditToolbar /> : canEdit ? <EnterEditButton onClick={enterEdit} /> : null}
     </EditContext.Provider>
@@ -113,7 +188,7 @@ function EditToolbar() {
         <span className="font-semibold text-gold">Chế độ chỉnh sửa</span>
         <span className="hidden text-ivory/70 md:inline">
           {" "}
-          — bấm vào chữ bất kỳ để sửa, tự lưu khi bấm ra ngoài.
+          — bấm vào chữ để sửa, bấm “Đổi ảnh” để thay ảnh. Tự lưu.
         </span>
       </p>
       <div className="flex items-center gap-2">
@@ -202,5 +277,72 @@ export function EditableText({
     >
       {value}
     </Tag>
+  );
+}
+
+/**
+ * Photo that the owner can swap in edit mode. Its nearest positioned ancestor hosts the
+ * "Đổi ảnh" button, so keep the parent `relative`/`absolute`.
+ */
+export function EditableImage({
+  id,
+  src,
+  buttonClassName = "right-3 top-3",
+  ...imgProps
+}: React.ImgHTMLAttributes<HTMLImageElement> & {
+  id: string;
+  src: string;
+  buttonClassName?: string;
+}) {
+  const { editMode, images, setImage } = useEdit();
+  const [busy, setBusy] = useState(false);
+  const custom = images[id];
+
+  const onPick = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      window.alert("Vui lòng chọn một file ảnh (JPG, PNG, WEBP…).");
+      return;
+    }
+    setBusy(true);
+    try {
+      await setImage(id, await fileToDataUrl(file));
+    } catch {
+      window.alert("Không đổi được ảnh này, bạn thử ảnh khác nhé.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <>
+      <img {...imgProps} src={custom ?? src} />
+      {editMode ? (
+        <div className={cn("absolute z-20 flex gap-1.5", buttonClassName)}>
+          <label className="flex cursor-pointer items-center gap-1.5 rounded-full border border-gold/60 bg-ink/85 px-3 py-1.5 text-xs font-medium text-ivory shadow-elegant backdrop-blur transition-colors hover:text-gold">
+            <ImageUp className="h-3.5 w-3.5 text-gold" />
+            {busy ? "Đang tải…" : "Đổi ảnh"}
+            <input
+              type="file"
+              accept="image/*"
+              className="sr-only"
+              onChange={onPick}
+              disabled={busy}
+            />
+          </label>
+          {custom ? (
+            <button
+              type="button"
+              onClick={() => void setImage(id, null)}
+              className="flex items-center gap-1 rounded-full border border-ivory/30 bg-ink/85 px-3 py-1.5 text-xs text-ivory backdrop-blur transition-colors hover:text-gold"
+            >
+              <Undo2 className="h-3 w-3" /> Ảnh gốc
+            </button>
+          ) : null}
+        </div>
+      ) : null}
+    </>
   );
 }
