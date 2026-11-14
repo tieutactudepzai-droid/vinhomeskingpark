@@ -43,7 +43,12 @@ function SectionHead({
 }) {
   return (
     <div className={center ? "mx-auto max-w-3xl text-center" : "max-w-2xl"}>
-      <EditableText id={`${idPrefix}.eyebrow`} defaultValue={eyebrow} as="p" className="eyebrow text-gold" />
+      <EditableText
+        id={`${idPrefix}.eyebrow`}
+        defaultValue={eyebrow}
+        as="p"
+        className="eyebrow text-gold"
+      />
       <h2
         className={`mt-4 text-4xl font-medium leading-[1.05] md:text-6xl ${light ? "text-ivory" : "text-foreground"}`}
       >
@@ -106,12 +111,30 @@ export function Hero() {
           </div>
 
           <div className="animate-float-up border border-ivory/15 bg-ink/55 p-7 backdrop-blur-md [animation-delay:200ms]">
-            <EditableText id="hero.facts-title" defaultValue="Thông tin nhanh" as="p" className="eyebrow text-gold" />
+            <EditableText
+              id="hero.facts-title"
+              defaultValue="Thông tin nhanh"
+              as="p"
+              className="eyebrow text-gold"
+            />
             <dl className="mt-5 divide-y divide-ivory/10">
               {QUICK_FACTS.map((f, i) => (
-                <div key={f.label} className="flex items-baseline justify-between gap-6 py-3 text-sm">
-                  <EditableText id={`fact.${i}.label`} defaultValue={f.label} as="dt" className="text-ivory/55" />
-                  <EditableText id={`fact.${i}.value`} defaultValue={f.value} as="dd" className="text-right font-medium" />
+                <div
+                  key={f.label}
+                  className="flex items-baseline justify-between gap-6 py-3 text-sm"
+                >
+                  <EditableText
+                    id={`fact.${i}.label`}
+                    defaultValue={f.label}
+                    as="dt"
+                    className="text-ivory/55"
+                  />
+                  <EditableText
+                    id={`fact.${i}.value`}
+                    defaultValue={f.value}
+                    as="dd"
+                    className="text-right font-medium"
+                  />
                 </div>
               ))}
             </dl>
@@ -128,9 +151,18 @@ export function Hero() {
             >
               <p className="font-display text-3xl text-gold md:text-4xl">
                 <EditableText id={`stat.${i}.value`} defaultValue={s.value} />
-                <EditableText id={`stat.${i}.unit`} defaultValue={s.unit} className="ml-1 text-lg text-gold-soft" />
+                <EditableText
+                  id={`stat.${i}.unit`}
+                  defaultValue={s.unit}
+                  className="ml-1 text-lg text-gold-soft"
+                />
               </p>
-              <EditableText id={`stat.${i}.label`} defaultValue={s.label} as="p" className="mt-1 text-xs text-ivory/65" />
+              <EditableText
+                id={`stat.${i}.label`}
+                defaultValue={s.label}
+                as="p"
+                className="mt-1 text-xs text-ivory/65"
+              />
             </div>
           ))}
         </div>
@@ -151,7 +183,11 @@ export function Overview() {
               <>
                 <EditableText id="overview.title1" defaultValue="Đô thị mới" />
                 <br />
-                <EditableText id="overview.title2" defaultValue="thành phố Bắc Ninh" className="italic text-gold" />
+                <EditableText
+                  id="overview.title2"
+                  defaultValue="thành phố Bắc Ninh"
+                  className="italic text-gold"
+                />
               </>
             }
             lead="Tọa lạc phía Tây Bắc thành phố Bắc Ninh, ôm trọn bán đảo sinh thái Hòa Long, Vinhomes King Park là đại đô thị quy mô 268,8 ha với tổng vốn đầu tư 41.000 tỷ đồng. Hơn 120 ha dành cho cây xanh, mặt nước, thể thao và công viên chủ đề."
@@ -159,8 +195,18 @@ export function Overview() {
           <dl className="mt-12 grid gap-x-10 sm:grid-cols-2">
             {SPECS.map((s, i) => (
               <div key={s.label} className="border-t border-border py-4">
-                <EditableText id={`spec.${i}.label`} defaultValue={s.label} as="dt" className="eyebrow text-muted-foreground" />
-                <EditableText id={`spec.${i}.value`} defaultValue={s.value} as="dd" className="mt-1.5 text-[15px] font-medium" />
+                <EditableText
+                  id={`spec.${i}.label`}
+                  defaultValue={s.label}
+                  as="dt"
+                  className="eyebrow text-muted-foreground"
+                />
+                <EditableText
+                  id={`spec.${i}.value`}
+                  defaultValue={s.value}
+                  as="dd"
+                  className="mt-1.5 text-[15px] font-medium"
+                />
               </div>
             ))}
           </dl>
@@ -176,12 +222,25 @@ export function Overview() {
             className="relative aspect-[4/5] w-full object-cover shadow-elegant"
           />
           <div className="absolute -bottom-8 left-6 right-6 bg-ink p-6 text-ivory shadow-elegant md:left-auto md:right-10 md:w-80">
-            <EditableText id="milestone.title" defaultValue="Tiến độ dự án" as="p" className="eyebrow text-gold" />
+            <EditableText
+              id="milestone.title"
+              defaultValue="Tiến độ dự án"
+              as="p"
+              className="eyebrow text-gold"
+            />
             <ol className="mt-4 space-y-3">
               {MILESTONES.map((m, i) => (
                 <li key={m.what} className="flex items-baseline justify-between gap-4 text-sm">
-                  <EditableText id={`milestone.${i}.what`} defaultValue={m.what} className="text-ivory/70" />
-                  <EditableText id={`milestone.${i}.when`} defaultValue={m.when} className="font-display text-lg text-gold-soft" />
+                  <EditableText
+                    id={`milestone.${i}.what`}
+                    defaultValue={m.what}
+                    className="text-ivory/70"
+                  />
+                  <EditableText
+                    id={`milestone.${i}.when`}
+                    defaultValue={m.when}
+                    className="font-display text-lg text-gold-soft"
+                  />
                 </li>
               ))}
             </ol>
@@ -204,26 +263,43 @@ export function Location() {
             <>
               <EditableText id="location.title1" defaultValue="Tâm điểm phía Tây Bắc" />
               <br />
-              <EditableText id="location.title2" defaultValue="thủ phủ Kinh Bắc" className="italic text-gold" />
+              <EditableText
+                id="location.title2"
+                defaultValue="thủ phủ Kinh Bắc"
+                className="italic text-gold"
+              />
             </>
           }
           lead="Tọa độ vàng tại bán đảo Hòa Long kết nối đa hướng — cư dân dễ dàng tiếp cận trung tâm hành chính, khu công nghiệp và các tỉnh thành lân cận."
         />
-        <ul className="divide-y divide-ivory/10 border-y border-ivory/10">
-          {CONNECTIONS.map((c, i) => (
-            <li key={c.place} className="group flex items-center justify-between py-5">
-              <EditableText
-                id={`conn.${i}.place`}
-                defaultValue={c.place}
-                className="text-lg text-ivory/85 transition-colors group-hover:text-ivory"
-              />
-              <span className="flex items-baseline gap-2">
-                <EditableText id={`conn.${i}.minutes`} defaultValue={String(c.minutes)} className="font-display text-5xl text-gold" />
-                <span className="text-xs uppercase tracking-widest text-ivory/50">phút</span>
-              </span>
-            </li>
-          ))}
-        </ul>
+        <div>
+          <ul className="divide-y divide-ivory/10 border-y border-ivory/10">
+            {CONNECTIONS.map((c, i) => (
+              <li key={c.place} className="group flex items-center justify-between py-5">
+                <EditableText
+                  id={`conn.${i}.place`}
+                  defaultValue={c.place}
+                  className="text-lg text-ivory/85 transition-colors group-hover:text-ivory"
+                />
+                <span className="flex items-baseline gap-2">
+                  <EditableText
+                    id={`conn.${i}.minutes`}
+                    defaultValue={String(c.minutes)}
+                    className="font-display text-5xl text-gold"
+                  />
+                  <span className="text-xs uppercase tracking-widest text-ivory/50">phút</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <EditableText
+            id="location.note"
+            defaultValue="Thời gian lái xe tham khảo theo bản đồ kết nối của chủ đầu tư, có thể thay đổi theo giờ đi và tiến độ các tuyến đường mới."
+            as="p"
+            multiline
+            className="mt-5 text-xs leading-relaxed text-ivory/45"
+          />
+        </div>
       </div>
     </section>
   );
@@ -240,17 +316,29 @@ export function Highlights() {
           title={
             <>
               <EditableText id="highlights.title1" defaultValue="Sáu lý do định hình" />{" "}
-              <EditableText id="highlights.title2" defaultValue="King Park" className="italic text-gold" />
+              <EditableText
+                id="highlights.title2"
+                defaultValue="King Park"
+                className="italic text-gold"
+              />
             </>
           }
         />
         <div className="mt-16 grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
           {HIGHLIGHTS.map((h, i) => (
-            <article key={h.title} className="group bg-background p-9 transition-colors hover:bg-card">
+            <article
+              key={h.title}
+              className="group bg-background p-9 transition-colors hover:bg-card"
+            >
               <span className="font-display text-5xl italic text-gold/70 transition-colors group-hover:text-gold">
                 {ROMAN[i]}.
               </span>
-              <EditableText id={`hl.${i}.title`} defaultValue={h.title} as="h3" className="mt-6 text-2xl font-medium" />
+              <EditableText
+                id={`hl.${i}.title`}
+                defaultValue={h.title}
+                as="h3"
+                className="mt-6 text-2xl font-medium"
+              />
               <EditableText
                 id={`hl.${i}.body`}
                 defaultValue={h.body}
@@ -278,7 +366,11 @@ export function Products() {
             title={
               <>
                 <EditableText id="products.title1" defaultValue="Neo‑Classic &" />{" "}
-                <EditableText id="products.title2" defaultValue="Riverside" className="italic text-gold" />
+                <EditableText
+                  id="products.title2"
+                  defaultValue="Riverside"
+                  className="italic text-gold"
+                />
               </>
             }
             lead="Bốn dòng sản phẩm cho an cư, nghỉ dưỡng và kinh doanh — quỹ căn độc quyền mở bán sớm đợt 1."
@@ -303,15 +395,30 @@ export function Products() {
                 />
               </div>
               <div className="flex flex-1 flex-col p-6">
-                <EditableText id={`prod.${i}.name`} defaultValue={p.name} as="h3" className="text-2xl font-medium" />
+                <EditableText
+                  id={`prod.${i}.name`}
+                  defaultValue={p.name}
+                  as="h3"
+                  className="text-2xl font-medium"
+                />
                 <dl className="mt-4 space-y-2 text-sm">
                   <div className="flex justify-between">
                     <dt className="text-muted-foreground">Diện tích</dt>
-                    <EditableText id={`prod.${i}.area`} defaultValue={p.area} as="dd" className="font-medium" />
+                    <EditableText
+                      id={`prod.${i}.area`}
+                      defaultValue={p.area}
+                      as="dd"
+                      className="font-medium"
+                    />
                   </div>
                   <div className="flex justify-between">
                     <dt className="text-muted-foreground">Quy mô</dt>
-                    <EditableText id={`prod.${i}.floors`} defaultValue={p.floors} as="dd" className="font-medium" />
+                    <EditableText
+                      id={`prod.${i}.floors`}
+                      defaultValue={p.floors}
+                      as="dd"
+                      className="font-medium"
+                    />
                   </div>
                 </dl>
                 <button
@@ -341,7 +448,11 @@ export function Amenities() {
             <>
               <EditableText id="amenities.title1" defaultValue="Mọi tiện ích trong" />
               <br />
-              <EditableText id="amenities.title2" defaultValue="cùng một không gian" className="italic text-gold" />
+              <EditableText
+                id="amenities.title2"
+                defaultValue="cùng một không gian"
+                className="italic text-gold"
+              />
             </>
           }
           lead="Hệ sinh thái 2.000+ tiện ích quốc tế, nơi vận động, thư giãn và kết nối cộng đồng diễn ra liền mạch."
@@ -357,8 +468,18 @@ export function Amenities() {
               className="h-full min-h-80 w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <figcaption className="bg-hero-fade absolute inset-0 flex flex-col justify-end p-8 text-ivory">
-              <EditableText id="amen.park.value" defaultValue="57 ha" as="p" className="font-display text-6xl text-gold" />
-              <EditableText id="amen.park.title" defaultValue="Công viên & quảng trường ven sông" as="h3" className="mt-2 text-3xl" />
+              <EditableText
+                id="amen.park.value"
+                defaultValue="57 ha"
+                as="p"
+                className="font-display text-6xl text-gold"
+              />
+              <EditableText
+                id="amen.park.title"
+                defaultValue="Công viên & quảng trường ven sông"
+                as="h3"
+                className="mt-2 text-3xl"
+              />
               <EditableText
                 id="amen.park.body"
                 defaultValue="Đường dạo bộ rợp bóng, đài vọng cảnh và bến thuyền ngắm hoàng hôn trải dài sát mép nước."
@@ -378,12 +499,22 @@ export function Amenities() {
               className="h-full min-h-64 w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <figcaption className="bg-hero-fade absolute inset-0 flex flex-col justify-end p-6 text-ivory">
-              <EditableText id="amen.pool.title" defaultValue="Bể bơi bốn mùa & Jacuzzi" as="h3" className="text-2xl" />
+              <EditableText
+                id="amen.pool.title"
+                defaultValue="Bể bơi bốn mùa & Jacuzzi"
+                as="h3"
+                className="text-2xl"
+              />
             </figcaption>
           </figure>
           <div className="grid grid-cols-2 gap-5">
             <div className="bg-ink p-6 text-ivory">
-              <EditableText id="amen.sport.value" defaultValue="70ha" as="p" className="font-display text-5xl text-gold" />
+              <EditableText
+                id="amen.sport.value"
+                defaultValue="70ha"
+                as="p"
+                className="font-display text-5xl text-gold"
+              />
               <EditableText
                 id="amen.sport.body"
                 defaultValue="Tổ hợp thể thao: tennis, pickleball, chạy bộ"
@@ -393,7 +524,12 @@ export function Amenities() {
               />
             </div>
             <div className="bg-gold-gradient p-6 text-primary-foreground">
-              <EditableText id="amen.vin.value" defaultValue="Vincom · Vinmec" as="p" className="font-display text-3xl" />
+              <EditableText
+                id="amen.vin.value"
+                defaultValue="Vincom · Vinmec"
+                as="p"
+                className="font-display text-3xl"
+              />
               <EditableText
                 id="amen.vin.body"
                 defaultValue="Thương mại, y tế & giáo dục chuẩn quốc tế"
@@ -421,7 +557,11 @@ export function Investment() {
             <>
               <EditableText id="invest.title1" defaultValue="Tăng trưởng vượt trội tại" />
               <br />
-              <EditableText id="invest.title2" defaultValue="thủ phủ công nghiệp" className="italic text-gold" />
+              <EditableText
+                id="invest.title2"
+                defaultValue="thủ phủ công nghiệp"
+                className="italic text-gold"
+              />
             </>
           }
           lead="Đón đầu hạ tầng Vành đai 4 và đô thị hóa Kinh Bắc — thương hiệu Vinhomes bảo chứng thanh khoản và giá trị gia tăng."
@@ -429,8 +569,18 @@ export function Investment() {
         <div className="mt-16 grid gap-10 md:grid-cols-3">
           {INVEST_NUMBERS.map((n, i) => (
             <div key={n.title} className="border-t-2 border-gold pt-6">
-              <EditableText id={`inv.${i}.value`} defaultValue={n.value} as="p" className="font-display text-6xl text-foreground" />
-              <EditableText id={`inv.${i}.title`} defaultValue={n.title} as="h3" className="eyebrow mt-4 text-[11px] text-gold" />
+              <EditableText
+                id={`inv.${i}.value`}
+                defaultValue={n.value}
+                as="p"
+                className="font-display text-6xl text-foreground"
+              />
+              <EditableText
+                id={`inv.${i}.title`}
+                defaultValue={n.title}
+                as="h3"
+                className="eyebrow mt-4 text-[11px] text-gold"
+              />
               <EditableText
                 id={`inv.${i}.body`}
                 defaultValue={n.body}
@@ -444,7 +594,12 @@ export function Investment() {
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {INVEST_REASONS.map((r, i) => (
             <div key={r.title} className="bg-secondary p-6">
-              <EditableText id={`reason.${i}.title`} defaultValue={r.title} as="h4" className="font-display text-xl font-medium" />
+              <EditableText
+                id={`reason.${i}.title`}
+                defaultValue={r.title}
+                as="h4"
+                className="font-display text-xl font-medium"
+              />
               <EditableText
                 id={`reason.${i}.body`}
                 defaultValue={r.body}
@@ -462,7 +617,10 @@ export function Investment() {
 
 export function LeadSection() {
   return (
-    <section id="bang-gia" className="relative scroll-mt-20 overflow-hidden bg-ink py-24 text-ivory md:py-32">
+    <section
+      id="bang-gia"
+      className="relative scroll-mt-20 overflow-hidden bg-ink py-24 text-ivory md:py-32"
+    >
       <img
         src={heroAerial}
         alt=""
@@ -474,11 +632,20 @@ export function LeadSection() {
       <div className="bg-ink-gradient absolute inset-0 opacity-80" />
       <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-2 lg:px-8">
         <div>
-          <EditableText id="lead.eyebrow" defaultValue="Cập nhật bảng giá" as="p" className="eyebrow text-gold" />
+          <EditableText
+            id="lead.eyebrow"
+            defaultValue="Cập nhật bảng giá"
+            as="p"
+            className="eyebrow text-gold"
+          />
           <h2 className="mt-4 text-5xl font-medium leading-[1.02] md:text-7xl">
             <EditableText id="lead.title1" defaultValue="Quỹ căn độc quyền" />
             <br />
-            <EditableText id="lead.title2" defaultValue="mở bán sớm đợt 1" className="italic text-gold" />
+            <EditableText
+              id="lead.title2"
+              defaultValue="mở bán sớm đợt 1"
+              className="italic text-gold"
+            />
           </h2>
           <EditableText
             id="lead.body"
@@ -497,13 +664,22 @@ export function LeadSection() {
                 <span className="font-display text-2xl">{HOTLINE_DISPLAY}</span>
               </span>
             </a>
-            <a href={ZALO_URL} target="_blank" rel="noreferrer" className="flex items-center gap-3 hover:text-gold">
+            <a
+              href={ZALO_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-3 hover:text-gold"
+            >
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-zalo text-[10px] font-bold text-zalo-foreground">
                 Zalo
               </span>
               <span>
                 <span className="block text-ivory/50">Chat Zalo</span>
-                <EditableText id="lead.zalo" defaultValue="Tư vấn 24/7" className="block font-display text-2xl" />
+                <EditableText
+                  id="lead.zalo"
+                  defaultValue="Tư vấn 24/7"
+                  className="block font-display text-2xl"
+                />
               </span>
             </a>
           </div>
