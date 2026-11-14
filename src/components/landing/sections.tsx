@@ -20,7 +20,7 @@ import {
   STATS,
   ZALO_URL,
 } from "./data";
-import { EditableText } from "./edit";
+import { EditableImage, EditableText } from "./edit";
 import { Logo } from "./header";
 import { LeadForm, useLead } from "./lead";
 
@@ -71,7 +71,9 @@ export function Hero() {
   const { open } = useLead();
   return (
     <section id="top" className="relative min-h-[100svh] overflow-hidden bg-ink text-ivory">
-      <img
+      <EditableImage
+        id="hero.image"
+        buttonClassName="right-4 top-24"
         src={heroAerial}
         alt="Phối cảnh toàn khu Vinhomes King Park ven sông Cầu"
         width={1920}
@@ -213,7 +215,8 @@ export function Overview() {
         </div>
         <div className="relative">
           <div className="absolute -right-4 -top-4 hidden h-full w-full border border-gold/50 lg:block" />
-          <img
+          <EditableImage
+            id="overview.image"
             src={villaSemi}
             alt="Biệt thự ven sông tại Vinhomes King Park"
             width={1024}
@@ -380,7 +383,8 @@ export function Products() {
           {PRODUCTS.map((p, i) => (
             <article key={p.name} className="group flex flex-col bg-card shadow-elegant">
               <div className="relative overflow-hidden">
-                <img
+                <EditableImage
+                  id={`prod.${i}.image`}
                   src={p.image}
                   alt={p.name}
                   width={1024}
@@ -459,7 +463,8 @@ export function Amenities() {
         />
         <div className="mt-14 grid gap-5 lg:grid-cols-3 lg:grid-rows-2">
           <figure className="group relative overflow-hidden lg:col-span-2 lg:row-span-2">
-            <img
+            <EditableImage
+              id="amen.park.image"
               src={riversidePark}
               alt="Công viên ven sông Cầu"
               width={1280}
@@ -490,7 +495,8 @@ export function Amenities() {
             </figcaption>
           </figure>
           <figure className="group relative overflow-hidden">
-            <img
+            <EditableImage
+              id="amen.pool.image"
               src={resortPool}
               alt="Bể bơi bốn mùa chuẩn resort"
               width={1280}
@@ -621,7 +627,9 @@ export function LeadSection() {
       id="bang-gia"
       className="relative scroll-mt-20 overflow-hidden bg-ink py-24 text-ivory md:py-32"
     >
-      <img
+      <EditableImage
+        id="lead.bg"
+        buttonClassName="right-4 top-4"
         src={heroAerial}
         alt=""
         width={1920}
