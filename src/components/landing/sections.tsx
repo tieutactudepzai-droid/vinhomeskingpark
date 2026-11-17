@@ -459,7 +459,7 @@ export function Amenities() {
               />
             </>
           }
-          lead="Hệ sinh thái 2.000+ tiện ích quốc tế, nơi vận động, thư giãn và kết nối cộng đồng diễn ra liền mạch."
+          lead="Hệ sinh thái 100+ tiện ích quốc tế, nơi vận động, thư giãn và kết nối cộng đồng diễn ra liền mạch."
         />
         <div className="mt-14 grid gap-5 lg:grid-cols-3 lg:grid-rows-2">
           <figure className="group relative overflow-hidden lg:col-span-2 lg:row-span-2">
@@ -532,7 +532,7 @@ export function Amenities() {
             <div className="bg-gold-gradient p-6 text-primary-foreground">
               <EditableText
                 id="amen.vin.value"
-                defaultValue="Vincom · Vinmec"
+                defaultValue="Vincom · Vinmec · VinSchool"
                 as="p"
                 className="font-display text-3xl"
               />
