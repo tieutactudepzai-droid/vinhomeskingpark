@@ -14,6 +14,7 @@ export const NAV = [
   { href: "#san-pham", label: "Sản phẩm" },
   { href: "#tien-ich", label: "Tiện ích" },
   { href: "#dau-tu", label: "Đầu tư" },
+  { href: "#vay-von", label: "Tính lãi vay" },
 ];
 
 export const QUICK_FACTS = [

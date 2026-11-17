@@ -32,4 +32,5 @@ use the editor.
 ## Project rules
 - Lead forms submit through `submitPriceRequest` (createServerFn) which validates with the shared zod schema in `src/lib/lead-schema.ts` and inserts with the service-role client; `price_requests` has RLS on with no anon/authenticated policies so visitors can never read submissions.
 - Landing page content lives in `src/components/landing/data.ts`; sections only render it, so copy edits stay in one place.
+- Loan math lives in pure `src/lib/loan.ts` (covered by `loan.test.ts`); the calculator section only renders it, so formulas stay testable.
 - Landing text renders through `EditableText` and photos through `EditableImage` (`src/components/landing/edit.tsx`); per-browser edits overlay the defaults (text in localStorage, photos downscaled into IndexedDB because they exceed localStorage limits); edit mode is auto-on only on the preview/localhost host so public visitors never see it, and permanent changes still go into the source defaults/assets.

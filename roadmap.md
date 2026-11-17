@@ -5,4 +5,5 @@
 - [ ] Owner is still editing copy in the preview (saved in their browser). When they send final text, write it into the source defaults so every visitor sees it.
 - [x] Owner asked to keep the current preview state unchanged and continue editing later — no changes this turn.
 - [x] Owner can swap photos in the preview edit mode ("Đổi ảnh"), saved in their browser
+- [x] Bank loan calculator section (#vay-von) after Investment, with CTA into the price-request form
 - [ ] Optional later: email alert on new price request; make swapped photos permanent once the owner sends the real project photos.

@@ -4,6 +4,7 @@ import { EditProvider } from "@/components/landing/edit";
 import { FloatingContact } from "@/components/landing/floating-contact";
 import { SiteHeader } from "@/components/landing/header";
 import { LeadProvider } from "@/components/landing/lead";
+import { LoanCalculator } from "@/components/landing/loan-calculator";
 import {
   Amenities,
   Hero,
@@ -50,6 +51,7 @@ function Index() {
           <Products />
           <Amenities />
           <Investment />
+          <LoanCalculator />
           <LeadSection />
         </main>
         <SiteFooter />
