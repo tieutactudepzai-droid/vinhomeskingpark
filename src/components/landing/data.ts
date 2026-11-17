@@ -20,14 +20,14 @@ export const NAV = [
 export const QUICK_FACTS = [
   { label: "Chủ đầu tư", value: "Tập đoàn Vingroup" },
   { label: "Vị trí", value: "Phường Kinh Bắc, Bắc Ninh" },
-  { label: "Quy mô", value: "268,8 ha · ~33.000 cư dân" },
-  { label: "Bàn giao", value: "Quý III – 2029" },
+  { label: "Quy mô", value: "268,8 ha · ~31.000 cư dân" },
+  { label: "Bàn giao", value: "Năm 2032" },
   { label: "Sở hữu", value: "Lâu dài" },
 ];
 
 export const STATS = [
-  { value: "~277", unit: "ha", label: "Mật độ xây dựng chỉ 20%" },
-  { value: "200+", unit: "", label: "Tiện ích chuẩn quốc tế" },
+  { value: "~268,8", unit: "ha", label: "Mật độ xây dựng chỉ 20%" },
+  { value: "100+", unit: "", label: "Tiện ích chuẩn quốc tế" },
   { value: "70", unit: "ha+", label: "Quần thể thể thao" },
   { value: "10", unit: "phút", label: "Đến trung tâm TP Bắc Ninh" },
 ];
@@ -43,9 +43,9 @@ export const SPECS = [
 
 export const MILESTONES = [
   { when: "09 / 2026", what: "Khởi công" },
-  { when: "2028", what: "Bàn giao thấp tầng" },
-  { when: "2028 – 2029", what: "Bàn giao chung cư" },
-  { when: "2031 – 2032", what: "Hoàn thiện toàn khu" },
+  { when: "....", what: "Bàn giao thấp tầng" },
+  { when: "....", what: "Bàn giao chung cư" },
+  { when: "....", what: "Hoàn thiện toàn khu" },
 ];
 
 export const CONNECTIONS = [
@@ -96,39 +96,39 @@ export const PRODUCTS: {
     type: "Shophouse – Liền kề",
     name: "Shophouse liền kề",
     image: shophouse,
-    area: "60 – 120 m²",
-    floors: "4 – 5 tầng",
+    area: "60 – 149,4 m²",
+    floors: "5 tầng",
     status: "Độc quyền",
   },
   {
     type: "Biệt thự song lập",
     name: "Biệt thự song lập",
     image: villaSemi,
-    area: "162 – 250 m²",
-    floors: "3 – 4 tầng",
+    area: "184 – 304 m²",
+    floors: "4 tầng",
     status: "Độc quyền",
   },
   {
     type: "Biệt thự đơn lập",
     name: "Biệt thự đơn lập",
     image: villaDetached,
-    area: "250 – 400 m²",
-    floors: "3 – 4 tầng",
+    area: "345,5 m²",
+    floors: "4 tầng",
     status: "Độc quyền",
   },
   {
     type: "Chung cư cao tầng",
     name: "Chung cư cao tầng",
     image: apartment,
-    area: "29 – 410 m²",
-    floors: "8 tòa · 35 tầng",
+    area: "....",
+    floors: "8 tòa",
     status: "Đang cập nhật",
   },
 ];
 
 export const INVEST_NUMBERS = [
   {
-    value: "277 ha",
+    value: "268,8 ha",
     title: "Đại đô thị sinh thái Hòa Long",
     body: "Quy hoạch bài bản ven sông Cầu, nền tảng giá trị cho toàn khu Tây Bắc Bắc Ninh.",
   },
