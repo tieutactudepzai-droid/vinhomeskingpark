@@ -105,8 +105,8 @@ export function LoanCalculator() {
           />
         </div>
 
-        <div className="mt-14 grid gap-0 overflow-hidden border border-border bg-card shadow-elegant lg:grid-cols-[1.1fr_1fr]">
-          <div className="space-y-9 p-7 md:p-10">
+        <div className="mt-14 grid gap-0 overflow-hidden border border-border bg-card shadow-elegant md:grid-cols-2">
+          <div className="min-w-0 space-y-9 p-7 lg:p-10">
             <Field label="Giá trị căn nhà" value={price} onChange={setPrice} min={1} max={60} step={0.1} unit="tỷ" />
             <Field
               label="Tỷ lệ vay"
@@ -145,11 +145,11 @@ export function LoanCalculator() {
             </div>
           </div>
 
-          <div className="bg-ink-gradient flex flex-col p-7 text-ivory md:p-10">
+          <div className="bg-ink-gradient flex min-w-0 flex-col p-7 text-ivory lg:p-10">
             <p className="eyebrow text-gold">
               {method === "declining" ? "Trả tháng đầu tiên" : "Trả mỗi tháng"}
             </p>
-            <p className="mt-3 font-display text-5xl font-medium leading-none md:text-6xl" aria-live="polite">
+            <p className="mt-3 break-words font-display text-4xl font-medium leading-none lg:text-5xl xl:text-6xl" aria-live="polite">
               {formatVnd(result.firstPayment)}
             </p>
             {method === "declining" ? (
@@ -166,7 +166,7 @@ export function LoanCalculator() {
                 ["Tổng gốc + lãi phải trả", formatVnd(result.totalPaid)],
                 ["Số kỳ trả", `${result.months} tháng`],
               ].map(([k, v]) => (
-                <div key={k} className="flex items-center justify-between gap-4 py-3.5">
+                <div key={k} className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 py-3.5">
                   <dt className="text-ivory/60">{k}</dt>
                   <dd className="font-medium tabular-nums">{v}</dd>
                 </div>
