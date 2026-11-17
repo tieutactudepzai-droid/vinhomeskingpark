@@ -1,7 +1,12 @@
-import shophouse from "@/assets/shophouse.jpg";
-import villaSemi from "@/assets/villa-semi.jpg";
-import villaDetached from "@/assets/villa-detached.jpg";
-import apartment from "@/assets/apartment.jpg";
+import shophouseAsset from "@/assets/shophouse-real.jpg.asset.json";
+import villaSemiAsset from "@/assets/villa-semi-real.jpg.asset.json";
+import villaDetachedAsset from "@/assets/villa-detached-real.jpg.asset.json";
+import apartmentAsset from "@/assets/apartment-real.jpg.asset.json";
+
+const shophouse = shophouseAsset.url;
+const villaSemi = villaSemiAsset.url;
+const villaDetached = villaDetachedAsset.url;
+const apartment = apartmentAsset.url;
 import type { ProductType } from "@/lib/lead-schema";
 
 export const HOTLINE = "0978591194";

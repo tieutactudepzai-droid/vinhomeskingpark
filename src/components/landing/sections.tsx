@@ -1,9 +1,10 @@
 import { ArrowRight, ArrowUpRight, Phone } from "lucide-react";
 
-import heroAerial from "@/assets/hero-aerial.jpg";
-import riversidePark from "@/assets/riverside-park.jpg";
-import resortPool from "@/assets/resort-pool.jpg";
-import villaSemi from "@/assets/villa-semi.jpg";
+import heroAsset from "@/assets/hero-river-aerial.jpg.asset.json";
+import overviewAsset from "@/assets/overview-masterplan-view.jpg.asset.json";
+import riversideParkAsset from "@/assets/riverside-park-real.jpg.asset.json";
+import poolAsset from "@/assets/four-season-pool.jpg.asset.json";
+import leadBgAsset from "@/assets/amenity-masterplan-map.jpg.asset.json";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -74,10 +75,10 @@ export function Hero() {
       <EditableImage
         id="hero.image"
         buttonClassName="right-4 top-24"
-        src={heroAerial}
+        src={heroAsset.url}
         alt="Phối cảnh toàn khu Vinhomes King Park ven sông Cầu"
         width={1920}
-        height={1088}
+        height={1371}
         className="absolute inset-0 h-full w-full object-cover"
       />
       <div className="bg-hero-fade absolute inset-0" />
@@ -217,10 +218,10 @@ export function Overview() {
           <div className="absolute -right-4 -top-4 hidden h-full w-full border border-gold/50 lg:block" />
           <EditableImage
             id="overview.image"
-            src={villaSemi}
-            alt="Biệt thự ven sông tại Vinhomes King Park"
-            width={1024}
-            height={1280}
+            src={overviewAsset.url}
+            alt="Phối cảnh khu đô thị Vinhomes King Park"
+            width={1920}
+            height={1080}
             loading="lazy"
             className="relative aspect-[4/5] w-full object-cover shadow-elegant"
           />
@@ -465,7 +466,7 @@ export function Amenities() {
           <figure className="group relative overflow-hidden lg:col-span-2 lg:row-span-2">
             <EditableImage
               id="amen.park.image"
-              src={riversidePark}
+              src={riversideParkAsset.url}
               alt="Công viên ven sông Cầu"
               width={1280}
               height={960}
@@ -497,7 +498,7 @@ export function Amenities() {
           <figure className="group relative overflow-hidden">
             <EditableImage
               id="amen.pool.image"
-              src={resortPool}
+              src={poolAsset.url}
               alt="Bể bơi bốn mùa chuẩn resort"
               width={1280}
               height={960}
@@ -630,10 +631,10 @@ export function LeadSection() {
       <EditableImage
         id="lead.bg"
         buttonClassName="right-4 top-4"
-        src={heroAerial}
+        src={leadBgAsset.url}
         alt=""
         width={1920}
-        height={1088}
+        height={1356}
         loading="lazy"
         className="absolute inset-0 h-full w-full object-cover opacity-25"
       />
